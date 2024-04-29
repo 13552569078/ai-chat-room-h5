@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, viewport-fit=cover" />
+  <title>数智网格员</title>
+  <!-- <script type="text/javascript" src="/nativeBridge.js"></script> -->
+</head>
+
+<body>
+  <div id="app"></div>
+  <script type="module" src="/src/main.ts"></script>
+  <script type="text/javascript" src="https://unpkg.com/@dcloudio/uni-webview-js@0.0.3/index.js"></script>
+  <script>
+    window.onload = function () { //当页面加载完成时
+      const baseSize = 37.5; // 这个是设计稿中1rem的大小。
+      function setRem() {
+        // 实际设备页面宽度和设计稿的比值
+        const mwidth = document.documentElement.clientWidth > 550 ? 550 : document.documentElement.clientWidth;
+        const scale = mwidth / 375;
+        // 计算实际的rem值并赋予给html的font-size
+        document.documentElement.style.fontSize = (baseSize * scale) + 'px';
+      }
+      setRem();
+      window.addEventListener('resize', () => {
+        setRem();
+      });
+
+      document.addEventListener('touchstart', function (event) {
+        if (event.touches.length > 1) {
+          event.preventDefault();  //阻止元素的默认行为
+        }
+      })
+      var lastTouchEnd = 0;
+      document.addEventListener('touchend', function (event) {
+        var now = (new Date()).getTime();
+        if (now - lastTouchEnd <= 300) {
+          event.preventDefault();
+        }
+        lastTouchEnd = now;  //当前为最后一次触摸
+      }, false)
+    }
+  </script>
+</body>
+
+</html>
